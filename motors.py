@@ -22,9 +22,7 @@ class Omniwheel:
 
 class Movement:
     def __init__(self, *pins):  # pins = (pin1, pin2, angle, speedMultiplier)
-        self.motors = []
-        for pin in pins:
-            self.motors.append(Omniwheel(pin[:2], pin[2], pin[3]))
+        self.motors = [Omniwheel(pin[:2], pin[2], pin[3]) for pin in pins]
 
     def set(self, speed, angle, turning):
         for i in self.motors:
