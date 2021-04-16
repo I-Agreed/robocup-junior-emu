@@ -42,7 +42,7 @@ def analyse(img):
         print("--- PYTHON CODE ---")
         print(f"minVals = np.array([{hueMin}, {satMin}, {valMin}])")
         print(f"maxVals = np.array([{hueMax}, {satMax}, {valMax}])")
-        print(f"mask = cv2.inrange(img, minVals, maxVals)")
+        print(f"mask = cv2.inRange(img, minVals, maxVals)")
         exit()
 
 
