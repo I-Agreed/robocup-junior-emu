@@ -33,7 +33,7 @@ class Vision:
     def makeBlueGoalMask(self, img):
         return cv2.inRange(img, self.blueGoalRange[0], self.blueGoalRange[1])
         
-    def findRect(self, mask, minArea):
+    def findRect(self, mask, minArea: int):
         contours, hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL,
                                                cv2.CHAIN_APPROX_NONE)
         for cnt in contours:
