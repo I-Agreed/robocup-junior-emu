@@ -1,6 +1,7 @@
 from typing import List, Tuple
 import cv2
 import numpy as np
+import threading
 
 
 class Vision:
@@ -22,10 +23,15 @@ class Vision:
         self.blueGoalRange = (np.array(blueGoalRange[0]),
                               np.array(blueGoalRange[1]))
         self.camHeight = camHeight
+        self.img = self.readCam()
+        threading.Thread(target=self.readCamThread)
 
     def readCam(self):
-        #TODO: Unwrap 360 image into panorama image that actually makes sense
         return cv2.cvtColor(self.cap.read(), cv2.COLOR_BGR2HSV)
+
+    def readCamThread(self):
+        while True:
+            self.img = self.readCam()
 
     def makeBallMask(self, img):
         return cv2.inRange(img, self.ballMatchRange[0], self.ballMatchRange[1])
@@ -44,6 +50,7 @@ class Vision:
             if cv2.contourArea(cnt) > areaThresh:
                 peri = cv2.arcLength(cnt, True)
                 approx = cv2.approxPolyDP(cnt, 0.02 * peri, True)
-                return cv2.boundingRect(
-                    approx)  # Returns x, y, width and height in *pixels*
+                return cv2.boundingRect(approx)
+                # Returns x, y, width and height in *pixels*
+                # Don't forget that the pixel dimensions are in relation to the panorama image, not the 360 image
                 #TODO: Do some trig magic and get actual distances... somehow
