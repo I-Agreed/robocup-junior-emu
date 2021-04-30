@@ -62,7 +62,6 @@ class Vision:
                 return cv2.boundingRect(approx)
                 # Returns x, y, width and height in *pixels*
                 # Don't forget that the pixel dimensions are in relation to the panorama image, not the 360 image
-                # TODO: Do some trig magic and get actual distances... somehow
 
     def findDistance(self, coords: Tuple[int]):
         angleOfBall = coords[2] / self.img.shape[0] * self.fov
