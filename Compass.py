@@ -1,4 +1,3 @@
-from config import Config
 from i2clibraries import i2c_hmc5883l
 import threading
 from config import Config
