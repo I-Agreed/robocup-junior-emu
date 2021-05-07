@@ -1,6 +1,5 @@
 import json
 from typing import List
-from gpiozero.output_devices import Motor
 import numpy as np
 from dataclasses import dataclass
 
