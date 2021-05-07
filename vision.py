@@ -14,7 +14,6 @@ class Vision:
         ballRange: Tuple[List[int]] = ([14, 29, 178], [43, 169, 255]),
         # TODO: ^- Change these to actual color of competition ball, not a tennis ball
         camHeight: int = 150,
-        camAngle: int = 0,
         focalLength: int = 69,
         fov: int = 100,
         vidSource: int = 0,
@@ -26,7 +25,6 @@ class Vision:
             np.array(yellowGoalRange[0]),
             np.array(yellowGoalRange[1]),
         )
-        self.camAngle = camAngle
         self.focalLength = focalLength
         self.fov = fov
         self.blueGoalRange = (np.array(blueGoalRange[0]), np.array(blueGoalRange[1]))
