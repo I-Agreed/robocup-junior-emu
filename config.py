@@ -1,4 +1,6 @@
 import json
+from typing import List
+from gpiozero.output_devices import Motor
 import numpy as np
 from dataclasses import dataclass
 
@@ -25,54 +27,71 @@ class CameraConfig:
 
 
 @dataclass
-class Pins:
-    compass: int
-    motorController1: int
-    motorController2: int
+class MotorConfig:
+    pins: List[int]
+    angle: int
+
+
+@dataclass
+class CompassConfig:
+    pin: int
+    declination: List[int]
+
+
+@dataclass
+class VisionConfig:
+    camera: CameraConfig
+    ranges: Ranges
+    ballRadius: int
 
 
 class Config:
     def __init__(self, path: str = "./config.json"):
         with open(path, "r") as configFile:
             rawConfig = json.loads(configFile.read())
-            self.ranges = Ranges(
-                ColorRange(
-                    np.array(
-                        rawConfig["ranges"]["blueGoal"]["minVals"],
+
+            self.vision = VisionConfig(
+                CameraConfig(
+                    rawConfig["vision"]["camera"]["height"],
+                    rawConfig["vision"]["camera"]["focalLength"],
+                    rawConfig["vision"]["camera"]["fov"],
+                    rawConfig["vision"]["camera"]["vidSource"],
+                ),
+                Ranges(
+                    ColorRange(
+                        np.array(
+                            rawConfig["vision"]["ranges"]["blueGoal"]["minVals"],
+                        ),
+                        np.array(
+                            rawConfig["vision"]["ranges"]["blueGoal"]["maxVals"],
+                        ),
                     ),
-                    np.array(
-                        rawConfig["ranges"]["blueGoal"]["maxVals"],
+                    ColorRange(
+                        np.array(
+                            rawConfig["vision"]["ranges"]["yellowGoal"]["minVals"],
+                        ),
+                        np.array(
+                            rawConfig["vision"]["ranges"]["yellowGoal"]["maxVals"],
+                        ),
+                    ),
+                    ColorRange(
+                        np.array(
+                            rawConfig["vision"]["ranges"]["ball"]["minVals"],
+                        ),
+                        np.array(
+                            rawConfig["vision"]["ranges"]["ball"]["maxVals"],
+                        ),
                     ),
                 ),
-                ColorRange(
-                    np.array(
-                        rawConfig["ranges"]["yellowGoal"]["minVals"],
-                    ),
-                    np.array(
-                        rawConfig["ranges"]["yellowGoal"]["maxVals"],
-                    ),
-                ),
-                ColorRange(
-                    np.array(
-                        rawConfig["ranges"]["ball"]["minVals"],
-                    ),
-                    np.array(
-                        rawConfig["ranges"]["ball"]["maxVals"],
-                    ),
-                ),
+                rawConfig["vision"]["ballRadius"],
             )
 
-            self.camera = CameraConfig(
-                rawConfig["camera"]["height"],
-                rawConfig["camera"]["focalLength"],
-                rawConfig["camera"]["fov"],
-                rawConfig["camera"]["vidSource"],
+            self.compass = CompassConfig(
+                rawConfig["compass"]["pin"], rawConfig["compass"]["declination"]
             )
 
-            self.pins = Pins(
-                rawConfig["pins"]["compass"],
-                rawConfig["pins"]["motorController1"],
-                rawConfig["pins"]["motorController2"],
+            self.motors = MotorConfig(
+                rawConfig["motors"]["pins"], rawConfig["motors"]["angle"]
             )
 
     def refresh(self):
@@ -80,4 +99,4 @@ class Config:
 
 
 config = Config()
-print(config.camera.focalLength)
+print(config.vision.camera.focalLength)

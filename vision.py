@@ -1,35 +1,27 @@
-from typing import List, Tuple
+from typing import Tuple
 import cv2
 import numpy as np
 import threading
 import math
+from config import Config
 
 
 class Vision:
     def __init__(
         self,
-        yellowGoalRange: Tuple[List[int]],
-        blueGoalRange: Tuple[List[int]],
-        # TODO: ^- Add default values for these
-        ballRange: Tuple[List[int]] = ([14, 29, 178], [43, 169, 255]),
-        # TODO: ^- Change these to actual color of competition ball, not a tennis ball
-        camHeight: int = 150,
-        focalLength: int = 69,
-        fov: int = 100,
-        vidSource: int = 0,
+        config: Config,
     ):
-        self.cap = cv2.VideoCapture(vidSource)
+        self.cap = cv2.VideoCapture(config.vision.camera.vidSource)
         self.cap.set(cv2.CAP_PROP_BRIGHTNESS, 100)
-        self.ballRange = (np.array(ballRange[0]), np.array(ballRange[1]))
-        self.yellowGoalRange = (
-            np.array(yellowGoalRange[0]),
-            np.array(yellowGoalRange[1]),
-        )
-        self.focalLength = focalLength
-        self.fov = fov
-        self.blueGoalRange = (np.array(blueGoalRange[0]), np.array(blueGoalRange[1]))
-        self.camHeight = camHeight
-        self.ballRadius = 37
+        self.focalLength = config.vision.camera.focalLength
+        self.fov = config.vision.camera.fov
+        self.camHeight = config.vision.camera.height
+
+        self.ballRange = config.vision.ranges.ball
+        self.yellowGoalRange = config.vision.ranges.yellowGoal
+        self.blueGoalRange = config.vision.ranges.blueGoal
+
+        self.ballRadius = config.vision.ballRadius
         self.img = self.readCam()
         threading.Thread(target=self.readCamThread)
 

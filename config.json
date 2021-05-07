@@ -1,27 +1,33 @@
 {
-  "pins": {
-    "compass": 69,
-    "motorController1": 69,
-    "motorController2": 69
+  "compass": {
+    "pin": 69,
+    "declination": [12, 40]
   },
-  "ranges": {
-    "ball": {
-      "minVals": [69, 69, 69],
-      "maxVals": [69, 69, 69]
-    },
-    "yellowGoal": {
-      "minVals": [69, 69, 69],
-      "maxVals": [69, 69, 69]
-    },
-    "blueGoal": {
-      "minVals": [69, 69, 69],
-      "maxVals": [69, 69, 69]
-    }
+  "motors": {
+    "pins": [69, 69],
+    "angle": 69
   },
-  "camera": {
-    "height": 69,
-    "focalLength": 69,
-    "fov": 69,
-    "vidSource": 0
+  "vision": {
+    "camera": {
+      "height": 69,
+      "focalLength": 69,
+      "fov": 69,
+      "vidSource": 0
+    },
+    "ranges": {
+      "ball": {
+        "minVals": [69, 69, 69],
+        "maxVals": [69, 69, 69]
+      },
+      "yellowGoal": {
+        "minVals": [69, 69, 69],
+        "maxVals": [69, 69, 69]
+      },
+      "blueGoal": {
+        "minVals": [69, 69, 69],
+        "maxVals": [69, 69, 69]
+      }
+    },
+    "angle": 69
   }
 }
