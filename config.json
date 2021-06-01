@@ -4,7 +4,14 @@
     "declination": [12, 40]
   },
   "motors": {
-    "pins": [69, 69],
+    "pins": {
+      "enA": 69,
+      "enB": 69,
+      "in1": 69,
+      "in2": 69,
+      "in3": 69,
+      "in4": 69
+    },
     "angle": 69
   },
   "vision": {

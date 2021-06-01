@@ -33,13 +33,13 @@ class Vision:
             self.img = self.readCam()
 
     def makeBallMask(self, img):
-        return cv2.inRange(img, self.ballMatchRange[0], self.ballMatchRange[1])
+        return cv2.inRange(img, self.ballRange.minVals, self.ballRange.maxVals)
 
     def makeYellowGoalMask(self, img):
-        return cv2.inRange(img, self.yellowGoalRange[0], self.yellowGoalRange[1])
+        return cv2.inRange(img, self.yellowGoalRange.minVals, self.yellowGoalRange.maxVals)
 
     def makeBlueGoalMask(self, img):
-        return cv2.inRange(img, self.blueGoalRange[0], self.blueGoalRange[1])
+        return cv2.inRange(img, self.blueGoalRange.minVals, self.blueGoalRange.maxVals)
 
     def findRectCoords(self, mask, areaThresh: int):
         contours, hierarchy = cv2.findContours(

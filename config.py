@@ -26,8 +26,18 @@ class CameraConfig:
 
 
 @dataclass
+class MotorPins:
+    enA: int
+    enB: int
+    in1: int
+    in2: int
+    in3: int
+    in4: int
+
+
+@dataclass
 class MotorConfig:
-    pins: List[int]
+    pins: MotorPins
     angle: int
 
 
